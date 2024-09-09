@@ -1,3 +1,6 @@
-import query from "./model/Search";
+require('@babel/polyfill');
+import Search from './model/Search'
 
-console.log(query)
+let search = new Search('pasta');
+
+search.doSearch().then(r => console.log(r));
