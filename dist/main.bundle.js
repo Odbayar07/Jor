@@ -1,18 +1,2 @@
-(self["webpackChunkmyproject"] = self["webpackChunkmyproject"] || []).push([["main"],{
-
-/***/ "./src/js/index.js":
-/*!*************************!*\
-  !*** ./src/js/index.js ***!
-  \*************************/
-/***/ (() => {
-
-
-
-/***/ })
-
-},
-/******/ __webpack_require__ => { // webpackRuntimeModules
-/******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = (__webpack_exec__("./src/js/index.js"));
-/******/ }
-]);
+"use strict";(self.webpackChunkmyproject=self.webpackChunkmyproject||[]).push([[792],{676:()=>{console.log("pizza")}},e=>{e(e.s=676)}]);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFpbi5idW5kbGUuanMiLCJtYXBwaW5ncyI6IitGQUVBQSxRQUFRQyxJQ0ZJLFEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9teXByb2plY3QvLi9zcmMvanMvaW5kZXguanMiLCJ3ZWJwYWNrOi8vbXlwcm9qZWN0Ly4vc3JjL2pzL21vZGVsL1NlYXJjaC5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcXVlcnkgZnJvbSBcIi4vbW9kZWwvU2VhcmNoXCI7XG5cbmNvbnNvbGUubG9nKHF1ZXJ5KSIsImxldCBxdWVyeSA9ICdwaXp6YSc7XG5cbmV4cG9ydCBkZWZhdWx0IHF1ZXJ5OyJdLCJuYW1lcyI6WyJjb25zb2xlIiwibG9nIl0sInNvdXJjZVJvb3QiOiIifQ==
