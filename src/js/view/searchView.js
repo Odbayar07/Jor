@@ -30,7 +30,7 @@ export const clearSearchResult = () => {
  
 export const getInput = () => elements.searchInput.value;
 
-export const renderRecipes = (recipes, currentPage = 1, resPerPage = 10) => {
+export const renderRecipes = (recipes, currentPage = 1, resPerPage = 5) => {
 
   const start = ( currentPage-1 ) * resPerPage;
   const end = currentPage * resPerPage;
