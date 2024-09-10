@@ -4,7 +4,6 @@ export default class Recipe {
   constructor(id){
     this.id = id;
   }
-  //https://forkify-api.herokuapp.com/api/get?rId=47746
   async getRecipe(){
     const result = await axios('https://forkify-api.herokuapp.com/api/get?rId=' + this.id);
     this.publisher = result.data.recipe.publisher;
@@ -14,6 +13,13 @@ export default class Recipe {
     this.publisher_url = result.data.recipe.publisher_url;
     this.title = result.data.recipe.title;
     this.social_rank = result.data.recipe.social_rank;
-    console.log(this.image_url);
+  }
+
+  calcTime(){
+    this.time = this.ingredients.length * 5;
+  }
+
+  calcHuniiToo() {
+    this.huniiToo = 4;
   }
 }

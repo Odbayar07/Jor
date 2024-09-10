@@ -3,6 +3,11 @@ import Search from './model/Search';
 import { elements, renderLoader, clearLoader } from './view/base';
 import * as searchView from './view/searchView';
 import Recipe from './model/Recipe';
+import { renderRecipe, clearRecipe, highlightSelectedRecipe} from './view/recipeView'
+import List from './model/List';
+import * as listView from './view/listView';
+import Like from './model/Like';
+
 
 const state = {};
 
@@ -44,5 +49,73 @@ elements.pageButtons.addEventListener('click', e => {
   }
 });
 
-const r = new Recipe(47746);
-r.getRecipe();
+const controlRecipe = async () => {
+  // url aas id g salgana
+  const id = window.location.hash.replace('#', '');
+
+  if (id){
+    // joriin model hiine
+    state.recipe = new Recipe(id);
+
+    // delgets beldene
+    clearRecipe();
+    renderLoader(elements.recipeDiv);
+    highlightSelectedRecipe(id);
+    
+    // joroo tatna
+    await state.recipe.getRecipe();
+
+    // jor guitsetgeh hugatsaa bolon orts tootsoolno
+    clearLoader();
+    state.recipe.calcTime();
+    state.recipe.calcHuniiToo();
+
+    // joroo delgetsend gargana
+    renderRecipe(state.recipe);
+  };
+};
+['hashchange', 'lead'].forEach(e => window.addEventListener(e, controlRecipe));
+
+const controlList = () => {
+  state.list = new List();
+
+  listView.clearItems();
+
+  state.recipe.ingredients.forEach( n => {
+    const item = state.list.addItem(n);
+    listView.renderItem(item);
+  });
+};
+
+const controlLike = () => {
+
+  if(!state.likes) state.likes = new Like();
+
+  const currentRecipeId = state.recipe.id;
+
+  if(state.likes.isLiked(currentRecipeId)){
+    state.likes.deleteLike(currentRecipeId);
+  }else{
+    state.likes.addLike(
+      currentRecipeId, 
+      state.recipe.title, 
+      state.recipe.publisher, 
+      state.recipe.image_url
+    );
+  }
+}
+
+elements.recipeDiv.addEventListener('click', e => {
+  if(e.target.matches('.recipe__btn, .recipe__btn *')){
+    controlList();
+  } else if(e.target.matches('.recipe__love, .recipe__love *')){
+    controlLike();
+  }
+});
+
+elements.shoppingList.addEventListener('click', e => {
+  const id = e.target.closest('.shopping__item').dataset.itemid;
+
+  state.list.deleteItem(id);
+  listView.deleteItem(id);
+});
