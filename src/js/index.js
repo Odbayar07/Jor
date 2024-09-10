@@ -25,10 +25,20 @@ const controlSearch = async () => {
     clearLoader();
     if(state.search.result === undefined) alert('hailt ilertsgui');
     else searchView.renderRecipes(state.search.result);
-  }
-}
+  };
+};
 
 elements.searchForm.addEventListener('submit', e => {
   e.preventDefault();
   controlSearch();
-})
+});
+
+elements.pageButtons.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-inline');
+
+  if(btn){
+    const gotoPageNumber = parseInt(btn.dataset.goto);
+    searchView.clearSearchResult();
+    searchView.renderRecipes(state.search.result, gotoPageNumber);
+  }
+});
