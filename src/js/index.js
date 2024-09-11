@@ -11,8 +11,6 @@ import * as likesView from './view/likesView'
 
 const state = {};
 
-likesView.toggleLikeMenu(0);
-
 const controlSearch = async () => {
   // webees hailtiin tulhuur gargana.
   const query = searchView.getInput();
@@ -54,7 +52,7 @@ elements.pageButtons.addEventListener('click', e => {
 const controlRecipe = async () => {
   // url aas id g salgana
   const id = window.location.hash.replace('#', '');
-  if(!state.likes) state.likes = new Like();
+  
 
   if (id){
     // joriin model hiine
@@ -78,6 +76,14 @@ const controlRecipe = async () => {
   };
 };
 ['hashchange', 'lead'].forEach(e => window.addEventListener(e, controlRecipe));
+
+window.addEventListener('load', e =>{
+  if(!state.likes) state.likes = new Like();
+
+  likesView.toggleLikeMenu(state.likes.getNumberOfLikes());
+
+  state.likes.likes.forEach(like => likesView.renderLike(like));
+});
 
 const controlList = () => {
   state.list = new List();
@@ -112,7 +118,7 @@ const controlLike = () => {
       state.recipe.image_url
     );
     likesView.renderLike(newLike);
-    
+
     likesView.toggleLikeBtn(true);
   };
 
