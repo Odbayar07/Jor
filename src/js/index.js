@@ -7,9 +7,11 @@ import { renderRecipe, clearRecipe, highlightSelectedRecipe} from './view/recipe
 import List from './model/List';
 import * as listView from './view/listView';
 import Like from './model/Like';
-
+import * as likesView from './view/likesView'
 
 const state = {};
+
+likesView.toggleLikeMenu(0);
 
 const controlSearch = async () => {
   // webees hailtiin tulhuur gargana.
@@ -52,6 +54,7 @@ elements.pageButtons.addEventListener('click', e => {
 const controlRecipe = async () => {
   // url aas id g salgana
   const id = window.location.hash.replace('#', '');
+  if(!state.likes) state.likes = new Like();
 
   if (id){
     // joriin model hiine
@@ -71,7 +74,7 @@ const controlRecipe = async () => {
     state.recipe.calcHuniiToo();
 
     // joroo delgetsend gargana
-    renderRecipe(state.recipe);
+    renderRecipe(state.recipe, state.likes.isLiked(id));
   };
 };
 ['hashchange', 'lead'].forEach(e => window.addEventListener(e, controlRecipe));
@@ -94,15 +97,26 @@ const controlLike = () => {
   const currentRecipeId = state.recipe.id;
 
   if(state.likes.isLiked(currentRecipeId)){
+
     state.likes.deleteLike(currentRecipeId);
+
+    likesView.deleteLike(currentRecipeId);
+
+    likesView.toggleLikeBtn(false);
+
   }else{
-    state.likes.addLike(
+    const newLike = state.likes.addLike(
       currentRecipeId, 
       state.recipe.title, 
       state.recipe.publisher, 
       state.recipe.image_url
     );
-  }
+    likesView.renderLike(newLike);
+    
+    likesView.toggleLikeBtn(true);
+  };
+
+  likesView.toggleLikeMenu(state.likes.getNumberOfLikes());
 }
 
 elements.recipeDiv.addEventListener('click', e => {
